@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+
+	<link rel="stylesheet" type="text/css" href="jsTable.css">
+
+  	<style>
+
+    .container {
+      height: 50px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  	<div class="container"> </div>
+
+  	<script src="jsTable.js"></script>
+
+  	<script>
+
+  		window.onload = function(){
+  			var container = document.getElementsByClassName('container')[0];
+
+  			var data = {
+  				Age: [
+  					1,
+  					2,
+  					3,
+  					4,
+  					5,
+  					6
+  				],
+
+  				Name: [
+  					'Miles',
+  					'Ben',
+  					'Sam',
+  					'Peter',
+  					'William',
+  					'Dustin'
+  				],
+
+  				Occupation: [
+  					'Doctor',
+  					'Lawyer',
+  					'Engineer',
+  					'Physicist',
+  					'Astronaut',
+  					'Broker'
+  				]
+
+  			}
+
+  			var initData = {
+  				data: data,
+  				container: container
+  			}
+
+  			jsTable.intitalize(initData);
+  		}
+
+  	</script>
+
+</body>

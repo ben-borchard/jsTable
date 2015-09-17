@@ -1,0 +1,32 @@
+.table {
+  border: 1px solid #000;
+}
+
+.table-row {
+  border-bottom: 1px solid #000;
+}
+
+.separator {
+  width: 5px;
+  margin: 0px 0px -5px -5px;
+}
+
+.separator:hover {
+  cursor: col-resize;
+}
+
+.row-content {
+  display:inline-block;
+}
+
+.data-content {
+  border-right: 1px solid #000;
+}
+
+.header-row {
+  background-color: #DDD;
+}
+
+.header-row .data-content {
+  font-weight: bold;
+}

@@ -3,6 +3,11 @@
 
 <head>
   <style>
+
+    .container {
+      height: 50px;
+    }
+
     .table {
       border: 1px solid #000;
     }
@@ -39,33 +44,34 @@
 </head>
 
 <body>
-
-  <div class="table">
-      <div class="header-row table-row">
-          <div class="row-content data-content table-col-0">Name</div>
-          <div class="row-content separator" index="0"></div>
-          <div class="row-content data-content table-col-1">Age</div>
-          <div class="row-content separator" index="1"></div>
-          <div class="row-content data-content table-col-2">Gender</div>
-          <div class="row-content separator" index="2"></div>
-      </div>
-      <div class="data">
-          <div class="content-row table-row">
-              <div class="row-content data-content table-col-0">Jane</div>
-              <div class="row-content data-content table-col-1">83</div>
-              <div class="row-content data-content table-col-2">female</div>
-          </div>
-          <div class="content-row table-row">
-              <div class="row-content data-content table-col-0">Mike</div>
-              <div class="row-content data-content table-col-1">23</div>
-              <div class="row-content data-content table-col-2">male</div>
-          </div>
-          <div class="content-row table-row">
-              <div class="row-content data-content table-col-0">Miles</div>
-              <div class="row-content data-content table-col-1">18</div>
-              <div class="row-content data-content table-col-2">male</div>
-          </div>
-      </div>
+  <div class="container">
+    <div class="table">
+        <div class="header-row table-row">
+            <div class="row-content data-content table-col-0">Name</div>
+            <div class="row-content separator" index="0"></div>
+            <div class="row-content data-content table-col-1">Age</div>
+            <div class="row-content separator" index="1"></div>
+            <div class="row-content data-content table-col-2">Gender</div>
+            <div class="row-content separator" index="2"></div>
+        </div>
+        <div class="data">
+            <div class="content-row table-row">
+                <div class="row-content data-content table-col-0">Jane</div>
+                <div class="row-content data-content table-col-1">83</div>
+                <div class="row-content data-content table-col-2">female</div>
+            </div>
+            <div class="content-row table-row">
+                <div class="row-content data-content table-col-0">Mike</div>
+                <div class="row-content data-content table-col-1">23</div>
+                <div class="row-content data-content table-col-2">male</div>
+            </div>
+            <div class="content-row table-row">
+                <div class="row-content data-content table-col-0">Miles</div>
+                <div class="row-content data-content table-col-1">18</div>
+                <div class="row-content data-content table-col-2">male</div>
+            </div>
+        </div>
+    </div>
   </div>
 
   <script>
@@ -86,24 +92,36 @@
       var j;
 
       for (i=0;i<numCols;i++){
-          var selector = 'table-col-'+i;
-          var maxWidth = 0;
-          var column = document.getElementsByClassName(selector);
-          for (j=0;j<column.length;j++){
-              if (column[j].offsetWidth > maxWidth){
-                  maxWidth = column[j].offsetWidth;
-              }
+        var selector = 'table-col-'+i;
+        var maxWidth = 0;
+        var column = document.getElementsByClassName(selector);
+        for (j=0;j<column.length;j++){
+          if (column[j].offsetWidth > maxWidth){
+            maxWidth = column[j].offsetWidth;
           }
-          for (j=0;j<column.length;j++){
-              var width = maxWidth;
-              if (j !== 0 && i !== 0){
-              	width = maxWidth + separatorWidth;
-              }
-              column[j].setAttribute('style', 'width:'+width+'px;');
-              column[j].style.width = width;
-              column[j].setAttribute('title', column[j].innerHTML);
+        }
+        for (j=0;j<column.length;j++){
+          var width = maxWidth;
+          if (j !== 0 && i !== 0){
+          	width = maxWidth + separatorWidth;
           }
+          column[j].setAttribute('style', 'width:'+width+'px;');
+          column[j].style.width = width;
+          column[j].setAttribute('title', column[j].innerHTML);
+        }
       }
+
+      var dataHeight = document.getElementsByClassName('container')[0].offsetHeight - document.getElementsByClassName('header-row')[0].offsetHeight;
+
+      console.log(document.getElementsByClassName('container')[0].offsetHeight);
+      console.log(document.getElementsByClassName('header-row')[0].offsetHeight);
+      console.log(dataHeight);
+
+      document.getElementsByClassName('data')[0].setAttribute ('style', 'height:'+dataHeight+'px;overflow:auto;');
+
+      console.log(document.getElementsByClassName('data')[0].offsetHeight);
+      console.log(document.getElementsByClassName('data')[0].style);
+      console.log(document.getElementsByClassName('data')[0].style.height);
 
       document.documentElement.addEventListener('mousemove', function(e) {
         if (resizeInfo.mouseDown){
@@ -132,6 +150,9 @@
       });
 
       document.documentElement.addEventListener('mouseup', function(e) {
+        if (resizeInfo.mouseDown){
+          document.documentElement.style.cursor = 'default';
+        }
         resizeInfo.mouseDown = false;
       });
 
@@ -143,6 +164,8 @@
 
         separators[i].addEventListener('mousedown', function(e) {
           e.preventDefault();
+
+          document.documentElement.style.cursor = 'col-resize';
 
           resizeInfo.currentDragWidth = document.querySelector('.header-row '+'.table-col-'+this.getAttribute('index')).offsetWidth;
           resizeInfo.currentDragX = e.layerX;
