@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <style>
+    .table {
+      border: 1px solid #000;
+    }
+
+    .table-row {
+      border-bottom: 1px solid #000;
+    }
+
+    .separator {
+      width: 5px;
+      margin: 0px 0px -5px -7px;
+    }
+
+    .separator:hover {
+      cursor: col-resize;
+    }
+
+    .row-content {
+      display:inline-block;
+    }
+
+    .data-content {
+      border-right: 1px solid #000;
+    }
+
+    .header-row {
+      background-color: #DDD;
+    }
+
+    .header-row .data-content {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="table">
+      <div class="header-row table-row">
+          <div class="row-content data-content table-col-0">Name</div>
+          <div class="row-content separator" index="0"></div>
+          <div class="row-content data-content table-col-1">Age</div>
+          <div class="row-content separator" index="1"></div>
+          <div class="row-content data-content table-col-2">Gender</div>
+          <div class="row-content separator" index="2"></div>
+      </div>
+      <div class="data">
+          <div class="content-row table-row">
+              <div class="row-content data-content table-col-0">Jane</div>
+              <div class="row-content data-content table-col-1">83</div>
+              <div class="row-content data-content table-col-2">female</div>
+          </div>
+          <div class="content-row table-row">
+              <div class="row-content data-content table-col-0">Mike</div>
+              <div class="row-content data-content table-col-1">23</div>
+              <div class="row-content data-content table-col-2">male</div>
+          </div>
+          <div class="content-row table-row">
+              <div class="row-content data-content table-col-0">Miles</div>
+              <div class="row-content data-content table-col-1">18</div>
+              <div class="row-content data-content table-col-2">male</div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+
+    /* Globals */
+    var resizeInfo = {
+      currentDragWidth: 0,
+      currentDragX: 0,
+      currentSeparatorIndex: null,
+      mouseDown: false
+    };
+
+    var separatorWidth = 2;
+    var numCols = 3;
+
+    window.onload = function() {
+      var i;
+      var j;
+
+      for (i=0;i<numCols;i++){
+          var selector = 'table-col-'+i;
+          var maxWidth = 0;
+          var column = document.getElementsByClassName(selector);
+          for (j=0;j<column.length;j++){
+              if (column[j].offsetWidth > maxWidth){
+                  maxWidth = column[j].offsetWidth;
+              }
+          }
+          for (j=0;j<column.length;j++){
+              var width = maxWidth;
+              if (j !== 0 && i !== 0){
+              	width = maxWidth + separatorWidth;
+              }
+              column[j].setAttribute('style', 'width:'+width+'px;');
+              column[j].style.width = width;
+              column[j].setAttribute('title', column[j].innerHTML);
+          }
+      }
+
+      document.documentElement.addEventListener('mousemove', function(e) {
+        if (resizeInfo.mouseDown){
+          width = resizeInfo.currentDragWidth+(e.layerX-resizeInfo.currentDragX);
+          if (e.layerX !== 0 && width >= 10){
+            var column = document.getElementsByClassName('table-col-'+resizeInfo.currentSeparatorIndex);
+            for(j=0;j<column.length;j++){
+              var addedWidth = 0;
+              if (j !== 0 && resizeInfo.currentSeparatorIndex !== '0'){
+                addedWidth = separatorWidth;
+              }
+              column[j].setAttribute('style', 'width:'+(width+addedWidth)+'px;');
+
+              var text = column[j].getAttribute('title');
+              column[j].innerHTML = text;
+              while (column[j].scrollWidth > column[j].clientWidth && text !== '..'){
+                text = text.slice(0, text.length-1)
+                if (text.length < 1){
+                  text = '..'
+                }
+                column[j].innerHTML = text === '..' ? text : text+'..';
+              }
+            }
+          }
+        }
+      });
+
+      document.documentElement.addEventListener('mouseup', function(e) {
+        resizeInfo.mouseDown = false;
+      });
+
+      var separators = document.getElementsByClassName('separator');
+      for (i=0;i<separators.length;i++){
+        headerRow = document.getElementsByClassName('header-row')[0];
+
+        separators[i].setAttribute('style', 'height:'+headerRow.offsetHeight+'px;');
+
+        separators[i].addEventListener('mousedown', function(e) {
+          e.preventDefault();
+
+          resizeInfo.currentDragWidth = document.querySelector('.header-row '+'.table-col-'+this.getAttribute('index')).offsetWidth;
+          resizeInfo.currentDragX = e.layerX;
+          resizeInfo.mouseDown = true;
+          resizeInfo.currentSeparatorIndex = this.getAttribute('index');
+        });
+
+
+      }
+    }
+
+
+  </script>
+
+</body>
