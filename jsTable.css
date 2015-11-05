@@ -32,20 +32,11 @@
   cursor:pointer;
 }
 
-.jstable-data-container {
-  width: 100%;
-  white-space: nowrap;
-  overflow-x: hidden;
-  cursor: default;
-}
-
 .jstable-data {
-  width:100%;
   white-space: nowrap;
   overflow-y: auto;
   overflow-x: hidden;
   cursor: default;
-  padding-right: 20px;
 }
 
 .jstable-sort-icon-up {
@@ -60,6 +51,6 @@
 .jstable-sort-icon-up,
 .jstable-sort-icon-down,
 .jstable-sort-icon-none {
-  width: 17px;
-  height: 10px;
+  width: 12px;
+  height: 7px;
 }

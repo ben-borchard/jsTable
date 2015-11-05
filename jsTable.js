@@ -69,7 +69,8 @@ var initHTML = function(self, initData){
     header.className = self.selectorPrefix+'row-content '+self.selectorPrefix+'data-content '+self.selectorPrefix+'table-col-'+i;;
 
     var textSpan = document.createElement('span');
-    textSpan.innerHTML = key === '' ? ' ' : key;
+    /* If empty put a nonbreaking space if to make the height be correct */
+    textSpan.innerHTML = key === '' ? '&nbsp;' : key;
 
     var separator = document.createElement('div');
     separator.className = self.selectorPrefix+'row-content '+self.selectorPrefix+'separator';
@@ -89,9 +90,6 @@ var initHTML = function(self, initData){
 
 
   /* Data */
-  var dataContainer = document.createElement('div');
-  dataContainer.className = self.selectorPrefix+'data-container';
-
   var data = document.createElement('div');
   data.className = self.selectorPrefix+'data';
 
@@ -104,7 +102,8 @@ var initHTML = function(self, initData){
     for(var col in initData.data){
       var cell = document.createElement('div');
       cell.className = self.selectorPrefix+'row-content '+self.selectorPrefix+'data-content '+self.selectorPrefix+'table-col-'+j;
-      cell.innerHTML = initData.data[col][i];
+      /* If empty put a nonbreaking space if to make the height be correct */
+      cell.innerHTML = initData.data[col][i] === '' ? '&nbsp;' : initData.data[col][i];
       row.appendChild(cell);
 
       j+=1;
@@ -113,9 +112,8 @@ var initHTML = function(self, initData){
     data.appendChild(row);
   }
 
-  dataContainer.appendChild(data);
   table.appendChild(headerRow);
-  table.appendChild(dataContainer);
+  table.appendChild(data);
   initData.container.appendChild(table);
 };
 
@@ -160,14 +158,6 @@ var setUpScroll = function(self, initData, heightOnly){
 
 	var tableWidth = document.getElementsByClassName(self.selectorPrefix+'header-row')[0].offsetWidth+10;
 	document.getElementsByClassName(self.selectorPrefix+'table')[0].setAttribute('style', 'width:'+tableWidth+'px;');
-
-  var data = document.getElementsByClassName('jstable-data')[0];
-
-  data.onscroll = function(e){
-    console.log(e);
-    console.log(scrollTop);
-  }
-
 };
 
 var setUpDocumentEvents = function(self){
@@ -358,9 +348,6 @@ var setUpSortEvents = function(self, initData){
         }
 
         /* Change the display */
-        var newDataContainer = document.createElement('div');
-        newDataContainer.className = self.selectorPrefix+'data-container';
-
         var newData = document.createElement('div');
         newData.className = self.selectorPrefix+'data';
 
@@ -368,12 +355,10 @@ var setUpSortEvents = function(self, initData){
           newData.appendChild(document.getElementById(self.selectorPrefix+'data-row-'+sortedData[j].index));
         }
 
-        newDataContainer.appendChild(newData);
         var table = document.getElementsByClassName(self.selectorPrefix+'table')[0];
-        var oldDataContainer = document.getElementsByClassName(self.selectorPrefix+'data-container')[0];
-
-        table.removeChild(oldDataContainer);
-        table.appendChild(newDataContainer);
+        var oldData = document.getElementsByClassName(self.selectorPrefix+'data')[0];
+        table.removeChild(oldData);
+        table.appendChild(newData);
 
         setUpScroll(self, initData, true);
       }
