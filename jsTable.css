@@ -1,32 +1,65 @@
-.table {
-  border: 1px solid #000;
+.jstable-table {
+  font-family: Proxima Nova, Helvetica Neue, Helvetica, Arial, sans-serif;
+  display: inline-block;
 }
 
-.table-row {
-  border-bottom: 1px solid #000;
+.jstable-table-row {
+  white-space: nowrap;
 }
 
-.separator {
+.jstable-separator {
   width: 5px;
-  margin: 0px 0px -5px -5px;
+  margin: 0px 0px -15px -5px;
 }
 
-.separator:hover {
+.jstable-separator:hover {
   cursor: col-resize;
 }
 
-.row-content {
+.jstable-row-content {
   display:inline-block;
 }
 
-.data-content {
-  border-right: 1px solid #000;
+.jstable-data-content {
+  border-bottom: 1px dotted #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  padding: 5px 5px 5px 5px;
 }
 
-.header-row {
-  background-color: #DDD;
-}
-
-.header-row .data-content {
+.jstable-header-row .jstable-data-content {
   font-weight: bold;
+  background-color: #F8F8F8;
+  cursor:pointer;
+}
+
+.jstable-data-container {
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+.jstable-data {
+  width:100%;
+  white-space: nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
+  cursor: default;
+  padding-right: 20px;
+}
+
+.jstable-sort-icon-up {
+  background:url(svg/arrow-up.svg);
+}
+
+.jstable-sort-icon-down {
+  background: url(svg/arrow-down.svg);
+}
+
+
+.jstable-sort-icon-up,
+.jstable-sort-icon-down,
+.jstable-sort-icon-none {
+  width: 17px;
+  height: 10px;
 }

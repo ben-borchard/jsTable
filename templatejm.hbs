@@ -1,0 +1,160 @@
+<div class="wizard" id="addLinkWizard" data-buttons-submitText="Add Link" data-contentWidth="95%" data-contentHeight="600" data-title="Add Link" data-klass="no-nav trans-bg">
+	<div class="wizard-card add-link" data-cardname="card1" style="display:block;">
+		<div class="row popover-buttons">
+       		{{source-select model=leftSources source=leftSource type="from" disabled=disabled}}
+       		{{source-select model=rightSources source=rightSource type="to" disabled=disabled}}
+       </div>
+       {{#if disabled}}
+       	 <div style="margin-top:30px;" class="row">
+     		<a {{action 'removeLink'}} id="remove-link-button" class="btn btn-danger col-md-4 col-md-offset-4">Remove Link</a>
+     	 </div>
+     	{{/if}}
+        <div class="section">
+        	<h4>Suggested Link Pairs</h4>
+        	  <ul class="link-pairs">
+        	  	{{#if currentJoin}}
+        	  		<li>Current</li>
+        	  		<li {{action 'select' "current"}} id="current" class="link-pair radio-selector selected">
+			          <div class="link-pair-col add-link-option-container">
+			            <input name="add-link-option" type="radio" value="{{alternateJoin.id}}" checked="true">
+			          </div>
+			          <div class="link-pair-col add-link-info add-link-info-1">
+			            <h5 title="{{currentJoin.leftCol}}">{{shorten-data currentJoin.leftCol 22}}</h5>
+			          </div>
+			          <div class="link-pair-col quality-arrows">
+			            <div class="arrow" style="font-size:{{currentJoin.quality}}%">
+			           	  {{#if currentJoin.left}} 
+			              	<span class="left"></span>
+			              	<span class="middle"></span>
+			              {{else}}
+			              	<span class="middle"></span>
+			              	<span class="right"></span>
+			              {{/if}}	
+			            </div>
+			            <div class="text">{{currentJoin.typeText}}</div>
+			          </div>
+			          <div class="link-pair-col add-link-info add-link-info-2">
+			            <h5 title="{{currentJoin.rightCol}}">{{shorten-data currentJoin.rightCol 10}}</h5>
+			          </div>
+			          <button class="link-pair-col link-data-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Sample Data<span class="attivio-icon-arrow-down"></span></button>
+			          <div class="collapse" id="collapseContent1">
+			              <div class="well">
+			                <div class="data-info">
+			                  <h5>{{leftSource.display_name}}.{{currentJoin.leftCol}}</h5>
+			                  <table class="table table-striped table-bordered">
+			                    <tbody>
+			                      {{#each currentJoin.leftData as |data|}} 
+				                      <tr>
+				                        <td>{{data}}</td>
+				                      </tr>
+			                      {{/each}}
+			                    </tbody>
+			                  </table>
+			                </div><!-- /.data-info -->
+			                <div class="data-info">
+			                  <h5>{{rightSource.display_name}}.{{currentJoin.rightCol}}</h5>
+			                  <table class="table table-striped table-bordered">
+			                    <tbody>
+			                      {{#each currentJoin.rightData as |data|}} 
+				                      <tr>
+				                        <td>{{data}}</td>
+				                      </tr>
+			                      {{/each}}
+			                    </tbody>
+			                  </table>
+			                </div><!-- /.data-info -->
+			              </div><!-- /.well -->
+			          </div><!-- /.collapse -->
+			        </li><!-- /.link-pair -->
+        	  	{{/if}}
+        	  	{{#if alternateJoins.length}}
+        	  		<li>Alternate</li>
+        	  	{{/if}}	
+        		{{#each alternateJoins as |alternateJoin|}}
+	        		<li {{action 'select' alternateJoin.idx alternateJoin.joinId}} id="join{{alternateJoin.idx}}" class="link-pair radio-selector">
+			          <div class="link-pair-col add-link-option-container">
+			            <input name="add-link-option" type="radio" value="{{alternateJoin.id}}">
+			          </div>
+			          <div class="link-pair-col add-link-info add-link-info-1">
+			            <h5 title="{{alternateJoin.leftCol}}">{{shorten-data alternateJoin.leftCol 22}}</h5>
+			          </div>
+			          <div class="link-pair-col quality-arrows">
+			            <div class="arrow" style="font-size:{{alternateJoin.quality}}%">
+			           	  {{#if alternateJoin.left}} 
+			              	<span class="left"></span>
+			              	<span class="middle"></span>
+			              {{else}}
+			              	<span class="middle"></span>
+			              	<span class="right"></span>
+			              {{/if}}	
+			            </div>
+			            <div class="text">{{alternateJoin.typeText}}</div>
+			          </div>
+			          <div class="link-pair-col add-link-info add-link-info-2">
+			            <h5 title="{{alternateJoin.rightCol}}">{{shorten-data alternateJoin.rightCol 10}}</h5>
+			          </div>
+			          <button class="link-pair-col link-data-button" type="button" data-toggle="collapse" data-target="#collapseContent{{alternateJoin.idx}}" aria-expanded="false" aria-controls="collapseContent{{alternateJoin.idx}}">Sample Data<span class="attivio-icon-arrow-down"></span></button>
+			          <div class="collapse" id="collapseContent{{alternateJoin.idx}}">
+			              <div class="well">
+			                <div class="data-info">
+			                  <h5>{{leftSource.display_name}}.{{alternateJoin.leftCol}}</h5>
+			                  <table class="table table-striped table-bordered">
+			                    <tbody>
+			                      {{#each alternateJoin.leftData as |data|}} 
+				                      <tr>
+				                        <td>{{data}}</td>
+				                      </tr>
+			                      {{/each}}
+			                    </tbody>
+			                  </table>
+			                </div><!-- /.data-info -->
+			                <div class="data-info">
+			                  <h5>{{rightSource.display_name}}.{{alternateJoin.rightCol}}</h5>
+			                  <table class="table table-striped table-bordered">
+			                    <tbody>
+			                      {{#each alternateJoin.rightData as |data|}} 
+				                      <tr>
+				                        <td>{{data}}</td>
+				                      </tr>
+			                      {{/each}}
+			                    </tbody>
+			                  </table>
+			                </div><!-- /.data-info -->
+			              </div><!-- /.well -->
+			          </div><!-- /.collapse -->
+			        </li><!-- /.link-pair -->
+		      	{{/each}}
+		      	<li>Custom</li>
+        		<li {{action 'select' "custom"}} id="custom" class="link-pair radio-selector">
+       			  <div class="link-pair-col add-link-option-container">
+		            <input id="custom-select" name="add-link-option" type="radio" value="custom">
+		          </div>
+		          <div class="link-pair-col add-link-info add-link-info-1 custom-select-container">
+		          	{{column-select model=leftCols selection=leftCol}}
+		          	<span id="left-col-error" class="col-error">This source must have a column selected</span>
+		          </div>
+		          <div class="link-pair-col quality-arrows">
+		            <div class="arrow" style="font-size:.5em">
+		              {{#if customRight}}
+			              <span {{action 'toggleDirection'}} id="left-custom" class="left" style="left:-15px;font-size:1.5em;border-color:#000;bottom:-12px"></span>
+			              <span class="middle"></span>
+			              <span class="right"></span>
+		              {{else}}
+			              <span class="left"></span>
+			              <span class="middle"></span>
+			              <span {{action 'toggleDirection'}} id="right-custom" class="right" style="right:-15px;font-size:1.5em;border-color:#000;bottom:-12px"></span>
+		              {{/if}}
+		            </div>
+		            <div {{action 'selectCustom'}} id="public-link" class="text">
+		          		<input name="public-toggle" type="checkbox"> Published
+		          	</div>
+		          </div>
+		          <div class="link-pair-col add-link-info add-link-info-2 custom-select-container">
+		          	{{column-select model=rightCols selection=rightCol}}
+		          	<span id="right-col-error" class="col-error">This source must have a column selected</span>
+		          </div>
+        		</li>
+        	</ul>
+        </div>
+	</div>
+</div>

@@ -8,7 +8,10 @@
   	<style>
 
     .container {
-      height: 50px;
+      height: 300px;
+      width: 500px;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
 
   </style>
@@ -26,34 +29,85 @@
   		window.onload = function(){
   			var container = document.getElementsByClassName('container')[0];
 
+				var possibleNames = [
+					'Miles',
+					'Ben',
+					'Sam',
+					'Peter',
+					'William',
+					'Dustin',
+					'Stoddard',
+					'Ramsey',
+					'Isabel',
+					'Jane',
+					'Barbara',
+					'Julia',
+					'Margaret',
+					'Kitty',
+					'Gertrude'
+				];
+
+				var possibleOccupations = [
+					'Doctor',
+					'Lawyer',
+					'Engineer',
+					'Physicist',
+					'Astronaut',
+					'Broker',
+					'Farmer',
+					'Teacher',
+					'Consultant',
+					'Analyst',
+					'Athelete',
+					'Cashier'
+				];
+
+				var possibleHometowns = [
+					'Winchester',
+					'Brookline',
+					'Concord',
+					'Exeter',
+					'Newton',
+					'Laguna Beach',
+					'Wayne',
+					'Cambridge',
+					'Southborough',
+					'Sausilito'
+				];
+
+				possibleFavoriteQuotes = [
+					'Does that mean he can start fires with his thoughts?',
+					'The opposite of love is indifference',
+					'A man either regards every occurence as a miracle or does not believe in miracles',
+					'\'Tis better to have loved and lost than never to have loved at all',
+					'With great power comes great responsibility',
+					'You always fear what you don\'t understand',
+					'Behold ye mighty and dispair; I am Ozymandias, King of kings',
+					'At the end of the day a little bit goes a long way',
+					'The man who gives the sentence should swing the sword',
+					'A man built on lies lives in a castle of straw',
+					'A wise man does once what a fool does finally',
+					'Courage is grace under pressure',
+				];
+
+				var ages = [];
+				var names = [];
+				var occupations = [];
+				var hometowns = [];
+				var favoriteQuotes = [];
+				for (var i=0; i<100; i++){
+					ages.push(Math.round(100*Math.random()));
+					names.push(possibleNames[Math.round((possibleNames.length-1)*Math.random())]);
+					occupations.push(possibleOccupations[Math.round((possibleOccupations.length-1)*Math.random())]);
+					hometowns.push(possibleHometowns[Math.round((possibleHometowns.length-1)*Math.random())]);
+					favoriteQuotes.push(possibleFavoriteQuotes[Math.round((possibleFavoriteQuotes.length-1)*Math.random())]);
+				}
   			var data = {
-  				Age: [
-  					1,
-  					2,
-  					3,
-  					4,
-  					5,
-  					6
-  				],
-
-  				Name: [
-  					'Miles',
-  					'Ben',
-  					'Sam',
-  					'Peter',
-  					'William',
-  					'Dustin'
-  				],
-
-  				Occupation: [
-  					'Doctor',
-  					'Lawyer',
-  					'Engineer',
-  					'Physicist',
-  					'Astronaut',
-  					'Broker'
-  				]
-
+  				Age: ages,
+  				Name: names,
+  				Occupation: occupations,
+  				Hometown: hometowns,
+  				'Favorite Quotations': favoriteQuotes
   			}
 
   			var initData = {
@@ -61,7 +115,7 @@
   				container: container
   			}
 
-  			jsTable.intitalize(initData);
+  			jsTable.initialize(initData);
   		}
 
   	</script>
